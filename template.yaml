@@ -1,0 +1,114 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  sam-typescript-demo
+
+  Sample SAM Template for sam-typescript-demo
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 100
+    Runtime: nodejs14.x
+    MemorySize: 128
+    Handler: index.handler
+    Layers:
+      - !Ref APISharedLayer
+Parameters:
+  Stage:
+    Description: 'stage name when deploy'
+    Type: String
+    Default: Dev
+  ApplicationName:
+    Description: 'application name'
+    Type: String
+    Default: SamTypescriptDemo
+
+Resources:
+  #==============================================================
+  # 共通レイヤー定義
+  #==============================================================
+  APISharedLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: !Sub '${ApplicationName}-APISharedLayer'
+      Description: !Sub 'shared layer for ${ApplicationName}'
+      ContentUri: src/layer/APISharedLayer
+      CompatibleRuntimes:
+        - nodejs14.x
+      RetentionPolicy: Retain
+  #==============================================================
+  # APIGateway定義
+  #==============================================================
+  SamTypescriptDemoAPI:
+    Type: AWS::Serverless::Api
+    Name: sam-typescript-demo-API
+    Properties:
+      StageName: !Sub ${Stage}
+  #==============================================================
+  # Lambda定義
+  #==============================================================
+  AddUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub '${ApplicationName}-AddUserFunction'
+      CodeUri: src/function/user/add
+      Description: 'add user function'
+      Policies:
+        - arn:aws:iam::aws:policy/CloudWatchEventsFullAccess
+        - arn:aws:iam::aws:policy/AWSLambda_FullAccess
+      Events:
+        api:
+          Type: Api
+          Properties:
+            Path: /user
+            Method: post
+            RestApiId: !Ref SamTypescriptDemoAPI
+  DeleteUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub '${ApplicationName}-DeleteUserFunction'
+      CodeUri: src/function/user/delete
+      Description: 'delete user function'
+      Policies:
+        - arn:aws:iam::aws:policy/CloudWatchEventsFullAccess
+        - arn:aws:iam::aws:policy/AWSLambda_FullAccess
+      Events:
+        api:
+          Type: Api
+          Properties:
+            Path: /user/{id}
+            Method: delete
+            RestApiId: !Ref SamTypescriptDemoAPI
+  GetUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub '${ApplicationName}-GetUserFunction'
+      CodeUri: src/function/user/get
+      Description: 'get user function'
+      Policies:
+        - arn:aws:iam::aws:policy/CloudWatchEventsFullAccess
+        - arn:aws:iam::aws:policy/AWSLambda_FullAccess
+      Events:
+        api:
+          Type: Api
+          Properties:
+            Path: /user/{id}
+            Method: get
+            RestApiId: !Ref SamTypescriptDemoAPI
+  UpdateUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub '${ApplicationName}-UpdateUserFunction'
+      CodeUri: src/function/user/update
+      Description: 'update user function'
+      Policies:
+        - arn:aws:iam::aws:policy/CloudWatchEventsFullAccess
+        - arn:aws:iam::aws:policy/AWSLambda_FullAccess
+      Events:
+        api:
+          Type: Api
+          Properties:
+            Path: /user/{id}
+            Method: put
+            RestApiId: !Ref SamTypescriptDemoAPI
