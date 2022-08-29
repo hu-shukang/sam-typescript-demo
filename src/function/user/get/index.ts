@@ -8,7 +8,7 @@ const func = async (event: APIGatewayProxyEvent, _: Context): Promise<UserModel>
   if (id == undefined) {
     throw new HttpError(Const.HTTP_STATUS_400, 'not found id');
   }
-  const user = userService.get(id);
+  const user = await userService.get(id);
   return user;
 };
 

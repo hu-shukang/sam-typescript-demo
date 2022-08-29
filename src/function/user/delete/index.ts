@@ -8,7 +8,7 @@ const func = async (event: APIGatewayProxyEvent, _: Context): Promise<string> =>
   if (id == undefined) {
     throw new HttpError(Const.HTTP_STATUS_400, 'not found id');
   }
-  userService.delete(id);
+  await userService.delete(id);
   return 'Delete OK';
 };
 

@@ -26,6 +26,22 @@ Parameters:
 
 Resources:
   #==============================================================
+  # DynamoDB定義
+  #==============================================================
+  UserTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: SAM-Typescript-Demo-UserTable
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+  #==============================================================
   # 共通レイヤー定義
   #==============================================================
   APISharedLayer:
@@ -57,6 +73,7 @@ Resources:
       Policies:
         - arn:aws:iam::aws:policy/CloudWatchEventsFullAccess
         - arn:aws:iam::aws:policy/AWSLambda_FullAccess
+        - arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
       Events:
         api:
           Type: Api
@@ -73,6 +90,7 @@ Resources:
       Policies:
         - arn:aws:iam::aws:policy/CloudWatchEventsFullAccess
         - arn:aws:iam::aws:policy/AWSLambda_FullAccess
+        - arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
       Events:
         api:
           Type: Api
@@ -89,6 +107,7 @@ Resources:
       Policies:
         - arn:aws:iam::aws:policy/CloudWatchEventsFullAccess
         - arn:aws:iam::aws:policy/AWSLambda_FullAccess
+        - arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
       Events:
         api:
           Type: Api
@@ -105,6 +124,7 @@ Resources:
       Policies:
         - arn:aws:iam::aws:policy/CloudWatchEventsFullAccess
         - arn:aws:iam::aws:policy/AWSLambda_FullAccess
+        - arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
       Events:
         api:
           Type: Api
