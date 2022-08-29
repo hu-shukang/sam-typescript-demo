@@ -25,4 +25,35 @@
 
 ============================================
 
-1. ユーザ追加
+# 2. ユーザ追加
+
+Postman からユーザを登録して、ユーザ ID を取得します。
+
+![image](https://github.com/hu-shukang/sam-typescript-demo/blob/main/doc/01.png?raw=true)
+
+DynamoDB 確認：
+![image](https://github.com/hu-shukang/sam-typescript-demo/blob/main/doc/02.png?raw=true)
+
+# 3. ユーザ取得
+
+Postman からユーザ ID を指定して、ユーザ情報を取得します。
+
+![image](https://github.com/hu-shukang/sam-typescript-demo/blob/main/doc/03.png?raw=true)
+
+# 4. ユーザ変更
+
+Postman からユーザ ID と変更後のユーザ情報を指定して、ユーザ情報を変更します。
+
+![image](https://github.com/hu-shukang/sam-typescript-demo/blob/main/doc/04.png?raw=true)
+
+DynamoDB 確認：
+![image](https://github.com/hu-shukang/sam-typescript-demo/blob/main/doc/05.png?raw=true)
+
+# 5. ユーザ削除
+
+Postman からユーザ ID を指定して、ユーザ情報を削除します。
+
+![image](https://github.com/hu-shukang/sam-typescript-demo/blob/main/doc/06.png?raw=true)
+
+DynamoDB 確認：
+![image](https://github.com/hu-shukang/sam-typescript-demo/blob/main/doc/07.png?raw=true)
