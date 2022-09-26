@@ -7,7 +7,9 @@
 - 言語：Node.js(TypeScript)
 - フレームワーク：AWS SAM
 - ライブラリ：AJV(バリデーションチェック)
-- DB: DynamoDB
+- AWSサービス: APIGateway、Lambda、DynamoDB
+
+
 
 ■ フォルダー構成
 
